@@ -114,7 +114,7 @@ set $ws3 "3: "
 set $ws4 "4:  Code"
 set $ws5 "5: ?"
 set $ws6 "6: "
-set $ws7 "7:  Tutorials"
+set $ws7 "7: Tutorials"
 set $ws8 "8: ?"
 set $ws9 "9:  | "
 set $ws10 "10: "
@@ -215,7 +215,7 @@ bindsym $mod+shift+n exec --no-startup-id /home/kicky/.screenlayout/two-monitors
 #xrandr --output HDMI-0 --primary --mode 2560x1080 --pos 0x0 --rotate normal --output eDP-1-0 --off
 bindsym $mod+shift+b exec --no-startup-id /home/kicky/.screenlayout/wide_monitor.sh
 
-
+bindsym $mod+shift+v exec --no-startup-id /home/kicky/.dotfiles/laptop-brightness/laptop-brightness.sh
 
 #window title in center positions
 title_align center
@@ -228,14 +228,17 @@ title_align center
 
 assign [class="jetbrains-phpstorm"] $ws1
 assign [class="jetbrains-webstorm"] $ws1
+assign [class="jetbrains-idea"] $ws1
 assign [class="Firefox"] $ws2
 assign [class="Gnome-terminal"] $ws3
+assign [class="1Password"] $ws3
 assign [class="Code"] $ws4
 assign [class="jetbrains-datagrip"] $ws6
 assign [class="TelegramDesktop"] $ws9
 assign [class="discord"] $ws9
 assign [class="Skype"] $ws9
 assign [class="Spotify"] $ws10
+assign [class="Anydesk"] $ws10
 
 
 workspace_auto_back_and_forth yes
@@ -245,12 +248,12 @@ set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #E53935
-
+# Only Locks
 bindsym $mod+shift+x exec i3lock --color "$bg-color"
 
 # window colors
 #                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          #00ff00
+client.focused          $bg-color           $bg-color          #8F00FF              #00ff00
 client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
@@ -283,12 +286,19 @@ exec --no-startup-id albert
 exec --no-startup-id polychromatic-tray-applet
 exec_always --no-startup-id compton -f
 
-bindsym $mod+shift+v exec --no-startup-id ~/.dotfiles/laptop-brightness.sh
 # start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 15"
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
-# Suspend
-bindsym $mod+Shift+period exec systemctl suspend
+# Suspend and LOCK
+bindsym $mod+Shift+period exec i3lock --color "$bg-color" && systemctl suspend
+# bindsym $mod+Shift+period exec systemctl suspend
+bindsym --release Print exec gnome-screenshot -i
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Gnome-calculator"] floating enable
+for_window [class="Skype"] floating enable
 
-#-------------------------disc
+# for_window [class="1Password"] floating enable
+# for_window [title="Authy"] floating enable
+# for_window [class="vlc"] move to workspace $ws5
+#-------------------------

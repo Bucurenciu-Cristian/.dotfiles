@@ -123,3 +123,8 @@ alias laptop="sudo brightnessctl set 100%"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+  PATH=$PATH:/home/kicky/.local/share/JetBrains/Toolbox/apps/PhpStorm/ch-0/213.5744.279/bin
+  PATH=$PATH:/home/kicky/.local/share/JetBrains/Toolbox/apps/WebStorm/ch-0/213.6461.79/bin
+  PATH=$PATH:/home/kicky/.local/share/JetBrains/Toolbox/apps/PhpStorm/ch-0/213.5744.279/bin
+  export PATH

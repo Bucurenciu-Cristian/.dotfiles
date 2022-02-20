@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo brightnessctl set 0%
+sudo brightnessctl set 100%
