@@ -10,10 +10,20 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $alt Mod1
+set $shift Shift
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+#---------------------
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-#font pango:Monospace 8
+# font pango:Monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -32,10 +42,6 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -44,10 +50,26 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+$shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec --no-startup-id dmenu_run
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# include ~/.config/i3/variables.conf
+# Todo Here the include doesn't work no matter what.
+# include variables-clar.conf
+
+# Screen brightness controls
+bindsym XF86MonBrightnessUp exec brightnessctl -q s +20% # increase screen brightness
+bindsym XF86MonBrightnessDown exec brightnessctl -q s 20%- # decrease screen brightness
 
 
 # A more modern dmenu replacement is rofi:
@@ -62,26 +84,14 @@ bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+$shift+j move left
+bindsym $mod+$shift+k move down
+bindsym $mod+$shift+l move up
+bindsym $mod+$shift+semicolon move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -95,7 +105,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+$shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -113,11 +123,26 @@ set $ws2 "2: "
 set $ws3 "3: "
 set $ws4 "4:  Code"
 set $ws5 "5: ?"
-set $ws6 "6: "
+set $ws6 "6: ?"
 set $ws7 "7: Tutorials"
 set $ws8 "8: ?"
 set $ws9 "9:  | "
-set $ws10 "10: "
+set $ws10 "10: Remote"
+
+assign [class="jetbrains-phpstorm"] $ws1
+assign [class="jetbrains-idea"] $ws1
+assign [class="jetbrains-datagrip"] $ws1
+assign [class="jetbrains-webstorm"] $ws1
+assign [class="Firefox" instance="Navigator"] $ws2
+assign [class="Gnome-terminal"] $ws3
+assign [class="1Password"] $ws3
+assign [class="Code"] $ws4
+assign [class="TelegramDesktop"] $ws9
+assign [class="discord"] $ws9
+assign [class="Skype"] $ws9
+assign [class="Spotify"] $ws10
+assign [class="Anydesk"] $ws10
+assign [class="VirtualBox Machine"] $ws10
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -132,124 +157,99 @@ bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
-
-
+bindsym $mod+$shift+1 move container to workspace number $ws1
+bindsym $mod+$shift+2 move container to workspace number $ws2
+bindsym $mod+$shift+3 move container to workspace number $ws3
+bindsym $mod+$shift+4 move container to workspace number $ws4
+bindsym $mod+$shift+5 move container to workspace number $ws5
+bindsym $mod+$shift+6 move container to workspace number $ws6
+bindsym $mod+$shift+7 move container to workspace number $ws7
+bindsym $mod+$shift+8 move container to workspace number $ws8
+bindsym $mod+$shift+9 move container to workspace number $ws9
+bindsym $mod+$shift+0 move container to workspace number $ws10
 
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+$shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+$shift+r restart
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+#Resize windows
+bindsym $mod+$shift+y resize shrink width 10 px or 10 ppt
+bindsym $mod+$shift+u resize grow height 10 px or 10 ppt
+bindsym $mod+$shift+i resize shrink height 10 px or 10 ppt
+bindsym $mod+$shift+o resize grow width 10 px or 10 ppt
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+bindsym $mod+Tab workspace next
+bindsym $mod+$shift+Tab workspace prev
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+# Make the currently focused window a scratchpad
+bindsym $mod+$shift+minus move scratchpad
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
-}
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
 
-bindsym $mod+r mode "resize"
+# Show the sup-mail scratchpad window, if any.
+# bindsym $mod+s [title="^Sup ::"] scratchpad show
 
+# Search Whatsapp in scratchpad
+bindsym $mod+$shift+plus [title="WhatsApp — Mozilla Firefox"] scratchpad show
+
+# Search Telegram in scratchpad
+bindsym $mod+equal [class="TelegramDesktop"] scratchpad show
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 15"
+
+# Only Locks
+bindsym $mod+$shift+x exec i3lock --color "$bg-color"
+
+# Suspend and LOCK
+bindsym $mod+$shift+period exec /home/kicky/.screenlayout/one_monitor.sh && i3lock --color "$bg-color" && systemctl suspend
+
+#Script for selecting the monitors.
+bindsym $mod+F3 exec --no-startup-id /home/kicky/.config/i3/scripts/dmenuMonitor.sh
 
 # Moving workspaces between screens 
 bindsym $mod+p move workspace to output right
 
-
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
-
-# Touchpad controls
-bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
-
-# Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-
-#---------------------
-
+# for_window [all] title_window_icon padding 3px
+# for_window [all] title_window_icon on
 #font size
-font pango:System San Francisco Display 11
+font pango:System San Francisco Display 12
 
 #Background image
 exec_always feh --bg-scale /home/kicky/.local/share/backgrounds/2021-10-02-11-23-58-Must\ Have\ 4K\ UHD\ Landscapes\ wallpapers\ June\ 2021\ \(TeNeBrA\)_01\ \(967\).jpg
+hide_edge_borders both
 
-# exec xrandr --output HDMI-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal --output eDP-1-0 --mode 1920x1080 --pos 0x0 --rotate normal
-
-#xrandr --output HDMI-0 --off --output eDP-1-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal
-bindsym $mod+shift+m exec --no-startup-id /home/kicky/.screenlayout/one_monitor.sh
-#xrandr --output HDMI-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal --output eDP-1-0 --mode 1920x1080 --pos 0x0 --rotate normal
-bindsym $mod+shift+n exec --no-startup-id /home/kicky/.screenlayout/two-monitors.sh
-#xrandr --output HDMI-0 --primary --mode 2560x1080 --pos 0x0 --rotate normal --output eDP-1-0 --off
-bindsym $mod+shift+b exec --no-startup-id /home/kicky/.screenlayout/wide_monitor.sh
-
-bindsym $mod+shift+v exec --no-startup-id /home/kicky/.dotfiles/laptop-brightness/laptop-brightness.sh
+workspace_auto_back_and_forth yes
 
 #window title in center positions
 title_align center
 
-# workspace $ws2 output primary
-# workspace $ws8 output primary
-# workspace $ws7 output primary
-# workspace $ws9 output primary
-# workspace $ws10 output primary
+# shutdown / restart / suspend...
+# set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown
 
-assign [class="jetbrains-phpstorm"] $ws1
-assign [class="jetbrains-webstorm"] $ws1
-assign [class="jetbrains-idea"] $ws1
-assign [class="Firefox"] $ws2
-assign [class="Gnome-terminal"] $ws3
-assign [class="1Password"] $ws3
-assign [class="Code"] $ws4
-assign [class="jetbrains-datagrip"] $ws6
-assign [class="TelegramDesktop"] $ws9
-assign [class="discord"] $ws9
-assign [class="Skype"] $ws9
-assign [class="Spotify"] $ws10
-assign [class="Anydesk"] $ws10
+# mode "$mode_system" {
+#     bindsym l exec --no-startup-id $i3lockwall, mode "default"
+#     bindsym e exec --no-startup-id i3-msg exit, mode "default"
+#     bindsym s exec --no-startup-id $i3lockwall && systemctl suspend, mode "default"
+#     bindsym h exec --no-startup-id $i3lockwall && systemctl hibernate, mode "default"
+#     bindsym r exec --no-startup-id systemctl reboot, mode "default"
+#     bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
+#     # back to normal: Enter or Escape
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
 
-workspace_auto_back_and_forth yes
-
+# bindsym $mod+BackSpace mode "$mode_system"
+# Colors
 set $bg-color 	         #2f343f
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #E53935
-# Only Locks
-bindsym $mod+shift+x exec i3lock --color "$bg-color"
 
 # window colors
 #                       border              background         text                 indicator
@@ -258,13 +258,17 @@ client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 
-hide_edge_borders both
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        output HDMI-0
+        # output eDP-1-0
+        # output primary
+        
+
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        tray_output primary
+        tray_output HDMI-0
+        # tray_output eDP-1-0
         position top
 	colors {
 		background $bg-color
@@ -277,28 +281,54 @@ bar {
         separator_symbol |
 }
 
-#Start Up Programs
+bar {
+        output eDP-1-0
+        # output HDMI-0
+        # output primary
+        
 
-# exec --no-startup-id spotify
-# exec --no-startup-id 1password
-# exec --no-startup-id skype
+        status_command i3blocks -c ~/.config/i3/i3blocks-small.conf
+        # tray_output HDMI-0
+        tray_output eDP-1-0
+        position top
+	colors {
+		background $bg-color
+	    	separator #757575
+		#                  border             background         text
+		focused_workspace  $bg-color          $bg-color          $text-color
+		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+	}
+        separator_symbol |
+}
+
+
+bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
+bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
+
+
+bindsym --release Print exec gnome-screenshot -i
+
+for_window [class="Pavucontrol"] floating enable
+
+for_window [class="Gnome-calculator"] floating enable
+
+for_window [class="Skype"] floating enable
+
+#Start Up Programs
 exec --no-startup-id albert
 exec --no-startup-id polychromatic-tray-applet
 exec_always --no-startup-id compton -f
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 15"
-bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
-bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
-# Suspend and LOCK
-bindsym $mod+Shift+period exec i3lock --color "$bg-color" && systemctl suspend
-# bindsym $mod+Shift+period exec systemctl suspend
-bindsym --release Print exec gnome-screenshot -i
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Gnome-calculator"] floating enable
-for_window [class="Skype"] floating enable
+
 
 # for_window [class="1Password"] floating enable
 # for_window [title="Authy"] floating enable
 # for_window [class="vlc"] move to workspace $ws5
 #-------------------------
+
+# floating_minimum_size 75 x 50
+# floating_maximum_size -1 x -1
+
+
+

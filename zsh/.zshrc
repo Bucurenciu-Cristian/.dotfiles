@@ -109,17 +109,19 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zshconfig="code ~/.zshrc"
+alias ohmyzsh="code ~/.oh-my-zsh"
 alias hausfabrik="cd /var/www/hausfabrik"
 alias clearCache="cd /var/www/hausfabrik/ && sudo rm -rf cache/ && mkdir cache && sudo php Thelia cache:clear && sudo chmod -R 777 cache/"
 alias cacheClear="cd /var/www/hausfabrik/ && sudo rm -rf cache/ && mkdir cache && sudo php Thelia cache:clear && sudo chmod -R 777 cache/"   
 alias utorrent="utserver -settingspath /opt/utorrent-server-*/ &"
 alias modCache="cd /var/www/hausfabrik/ && sudo chmod -R 777 cache/ && sudo chmod -R 777 web/"
 alias cacheMod="cd /var/www/hausfabrik/ && sudo chmod -R 777 cache/ && sudo chmod -R 777 web/"
-alias om="xrandr --output HDMI-0 --off --output eDP-1-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal"
-alias tm="xrandr --output HDMI-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal --output eDP-1-0 --mode 1920x1080 --pos 0x0 --rotate normal"
-alias laptop="sudo brightnessctl set 100%"
+alias laptopMonitor="xrandr --output HDMI-0 --off --output eDP-1-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal"
+alias twoMonitors="xrandr --output HDMI-0 --primary --mode 2560x1080 --pos 1920x0 --rotate normal --output eDP-1-0 --mode 1920x1080 --pos 0x0 --rotate normal"
+alias light100="sudo brightnessctl set 100%"
+alias battery60="cd ~/Desktop/ && ./limitd.sh 60 && cd -"
+alias battery100="cd ~/Desktop/ && ./limitd.sh 100 && cd -"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
