@@ -53,7 +53,12 @@ multimon() { # Multi-monitor handler.
 	esac ;}
 
 onescreen() { # If only one output available or chosen.
-	xrandr --output "$1" --auto --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
+    if [ $1 == "HDMI-0" ] 
+    then
+	    xrandr --output "$1" --auto --rate 75 --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
+    else
+	    xrandr --output "$1" --auto --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
+    fi
 	}
 
 postrun() { # Stuff to run to clean up.

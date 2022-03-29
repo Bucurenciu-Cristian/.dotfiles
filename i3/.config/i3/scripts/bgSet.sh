@@ -7,7 +7,7 @@
 #	If wal is installed, also generates a colorscheme.
 
 # Location of link to wallpaper link.
-bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/backgrounds/2021-10-02-11-23-58-Must\ Have\ 4K\ UHD\ Landscapes\ wallpapers\ June\ 2021\ \(TeNeBrA\)_01\"
+bgloc="${XDG_DATA_HOME:-$HOME}/Pictures/background/1.jpeg"
 
 # Configuration files of applications that have their themes changed by pywal.
 dunstconf="${XDG_CONFIG_HOME:-$HOME/.config}/dunst/dunstrc"
@@ -30,4 +30,4 @@ else
 	[ -f "$zathuraconf.bak" ] && unlink "$zathuraconf" && mv "$zathuraconf.bak" "$zathuraconf"
 fi
 
-xwallpaper --zoom "$bgloc"
+feh --bg-scale "$bgloc"
