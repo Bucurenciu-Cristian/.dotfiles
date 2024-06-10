@@ -1,0 +1,1 @@
+/home/kicky/.dotfiles/.vimrc
