@@ -1,12 +1,15 @@
-# ⚠️ REPOSITORY OBSOLETE ⚠️
+# ⚠️ Archived — superseded by Omarchy
 
-**This repository is no longer maintained.**
+**This repository is outdated and was archived on 2026-09-19.**
 
-🔄 **New Location**: https://github.com/Bucurenciu-Cristian/dotfiles
+My setup now runs on [Omarchy](https://omarchy.org). Its configuration is tracked
+in place and synced between machines by `mise dot` history in
+[`omarchy-sync`](https://github.com/Bucurenciu-Cristian/omarchy-sync) (private).
 
-The new repository uses **yadm** (Yet Another Dotfiles Manager) for better dotfiles management and is actively maintained.
+Everything below is kept for reference only.
 
 ---
+
 
 ## Migration Notice
 This repository was replaced on **June 27, 2025** with a yadm-managed setup that provides:
